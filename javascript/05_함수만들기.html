@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h3># 자바와 다른 함수 만들기 방법</h3>
+
+    <script>
+        //1번방법. 이렇게 변수안에다가 함수를 만들어 담는 경우에는 변수인 함수이기 때문에 함수 쓰는 곳 보다 위에 있어야함   
+        const getRandomScore = () => parseInt(Number(Math.random()* 101));
+
+        let englishScore;
+
+        englishScore = getRandomScore();
+
+        console.log(englishScore);
+
+        //2번방법. function을 선언하고 변수에 넣는것인데 이때 함수명은 생략가능
+        const getRandomScore2 = function (){
+            
+            parseInt(Number(Math.random()* 101));
+        }
+
+        let englishScore2;
+
+        englishScore2 = getRandomScore();
+
+        console.log(englishScore2);
+
+        //3번방법. 일반적으로 함수를 만들어두고 불러다 쓰는것
+        function getScore(){
+           return parseInt(Number(Math.random()* 101));
+        }
+        let englishScore3;
+
+        englishScore3 = getScore();
+
+        console.log(englishScore3);
+
+
+    </script>
+
+</body>
+</html>

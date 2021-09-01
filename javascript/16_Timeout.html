@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16_Timeout.html</title>
+    <style>
+        .clock{
+            border-radius: 100px;
+            border: double darkblue 5px;
+            text-align: center;
+            margin: auto;
+            width: 800px;
+            background-color: gold;
+            color: darkblue;
+            font-weight: bold;
+            font-size: 50px;
+        }
+    </style>
+</head>
+<body>
+    
+    <h3># setTimeout(callback함수, millisec)</h3>
+    <p>전달한 시간만큼 기다린 후에 콜백 함수를 한번 실행한다.</p>
+
+    <h3># setInterval(callback함수, millisec</h3>
+    <p>전달한 시간마다 콜백 함수를 실행한다.</p>
+
+    <!--자바스크립트를 이용하여 매 초마다 새로운 시간을 업데이트 해보세요-->
+    <div class="clock"></div>
+    <canvas class="canvas" width="500" height="500"></canvas>
+
+    <script>
+        // setTimeout(() => {
+        //     alert('5초가 지났습니다!'); //5초 후에 경고창
+        // }, 5000); //5초
+
+        // setInterval(() => {
+        //     console.log("3초가 지났습니다!"); //3초마다 콘솔에 찍힘
+        // }, 3000);
+       
+        const watch = document.querySelector('.clock');
+        const canvas = document.querySelector('.canvas');
+        const context = canvas.getContext('2d');
+        
+
+        function times(){
+            let today = new Date();
+            let year = today.getFullYear(); // 년도
+            let month = today.getMonth() + 1;  // 월
+            let date = today.getDate();  // 날짜
+            let day = today.getDay();  // 요일
+            let hour = today.getHours();
+            let minute = today.getMinutes();
+            let second = today.getSeconds();
+
+            watch.innerHTML = (year + '년 ' + month.toString().padStart(2,'0') + '월 ' + date.toString().padStart(2,'0')+'일 '+ hour.toString().padStart(2,'0') +':' + minute.toString().padStart(2,'0') +':'+ second.toString().padStart(2,'0'));
+        }
+
+        setInterval(() => {
+            times();
+        }, );
+
+        // context.fillRect(50,50,100,100);
+        // context.moveTo(300, 300);
+        // context.lineTo(300, 150);
+        // context.stroke();
+        // context.closePath();
+        
+        // const angle = (90/180) * Math.PI * -1;
+        // const x = Math.cos(angle) * 100;
+        // const y = Math.sin(angle) * 100;
+
+        // console.log(x);
+        // console.log(y);
+     
+        // context.beginPath();
+        // context.moveTo(300,300);
+        // context.lineTo(400 + x,400 + y);
+        // context.stroke();
+        // context.closePath();
+        // math.pi/6
+
+        const MARGIN = 25,
+            WIDTH = canvas.width,
+            HEIGHT = canvas.height,
+            RADIUS = WIDTH / 2 -MARGIN;
+
+        const drawCircle = () => {
+
+            context.beginPath();
+            context.arc(WIDTH/2, HEIGHT/2, RADIUS, 0, Math.PI*2, true);
+            context.stroke();
+            
+            context.beginPath();
+            context.arc(WIDTH/2, HEIGHT/2, 3, 0, Math.PI*2, true)
+            context.fill();
+
+            context.font='25px sans-serif';        
+            context.fillText(12, WIDTH/2-15 , 50);
+            context.fillText(3, WIDTH - 50 , HEIGHT/2);
+            context.fillText(6, WIDTH/2-15 , HEIGHT-40);
+            context.fillText(9, 40, HEIGHT/2);
+        }
+        
+        
+        const drawHands = () =>{
+            const date = new Date();
+            let H = date.getHours() + date.getMinutes()/60;
+            H = H > 12? H -12 : H;
+            const M = date.getMinutes() + date.getSeconds()/ 60;
+            const S = date.getSeconds() + date.getMilliseconds()/1000;
+            
+            drawHand((H * Math.PI) / 6 - 1.57, true);
+            drawHand((M * Math.PI) / 30 - 1.57, false);
+            drawHand((S * Math.PI) / 30 - 1.57, false);
+            drawHand()
+            // context.fillText(S.toFixed(3), 7, 15);   
+        }
+        
+        const drawHand = (angle,isH) =>{
+            const handRadius = isH ? RADIUS * 0.7 : RADIUS * 0.95;
+
+            context.beginPath();
+            context.moveTo(WIDTH/2, HEIGHT/2);
+            console.log(Math.cos(angle) * handRadius + WIDTH/2);
+            let left = Math.cos(angle) * handRadius + WIDTH/2;
+            console.log( Math.sin(angle)*handRadius + HEIGHT/2);
+            let right = Math.sin(angle)*handRadius + HEIGHT/2;
+            
+            context.lineTo(left, right);
+            context.stroke();
+        }
+
+        const loop = () =>{
+            context.clearRect(0,0,WIDTH,HEIGHT);
+            drawCircle();
+            drawHands();
+            requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
+</body>
+</html>

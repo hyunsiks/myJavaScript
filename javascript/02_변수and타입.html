@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02_변수and타입.html</title>
+</head>
+<body>
+    
+    <h3># 자바스크립트의 변수</h3>
+
+    <ul>
+        <li>자바스크립트에는 변수타입이 없다(데이터타입은 있음)</li>
+        <li>var : 단순하게 변수를 선언한다(생략가능)</li>
+        <li>let : 변경이 허용된 변수를 선언한다</li>
+        <li>const : 변경이 금지된 변수를 선언한다</li>
+    </ul>
+
+    <div id="out"></div>
+
+    <script>
+        var a = 10;
+        let b = 12;
+        const c = 13;
+        d = 'abcd';
+
+        //JavaScript Object(Java의 Map과 유사함)
+        const obj = {
+            name: '홍길동',
+            age: 15
+        };
+
+        //JavaScript Array
+        const arr = ['apple', 'orange', 'kiwi', 'melon', 123];
+
+        a = 123;
+        b = 345;
+        //c= 12345; //const의 변수값을 바꾸려고하면 콘솔창에 에러메세지 뜬다
+
+        //웹 브라우저의 콘솔에 출력(디버깅용)
+        console.log(a+b+c);
+
+        //경고창에 출력
+        // window.alert("a+b+c : " + (a+b+c));
+        
+        //가져온 document의 object에 출력
+        const out = document.getElementById("out"); //div의 id값인 out을 받는다는 것
+        out.innerHTML = "a + b+ c의 결과는 " + (a + b + c) + "입니다"; //div안에 이 값들을 넣게 되는것이다
+    
+        //변수에 담긴 데이터들의 타입 알아보기
+        console.log(typeof a);
+        console.log(typeof 김);
+        console.log(typeof 10);
+        console.log(typeof 0.4);
+
+        console.log(typeof obj);
+        console.log(typeof obj.name);
+        console.log(typeof obj.age);
+        
+        console.log(obj.name);
+        console.log(obj.age);
+        console.log(obj['name']);
+        console.log(obj['age']);
+
+        console.log(arr);
+    </script>
+
+</body>
+</html>

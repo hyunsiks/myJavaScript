@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Documnet Object Model</title>
+</head>
+<body>
+    
+    <h3># DOM (Documnet Object Model)</h3>
+
+    <ul>
+        <li>웹 브라우저는 html코드를 통해 구조를 해석하여 DO(Document객체)을 생성한다</li>
+        <li>자바스크립트를 통해 html문서의 모든 것에 접근 및 수정할 수 있다</li>
+        <li>css, 속성, 내용, 태그 등등 모든 것을 바꿀 수 있다</li>
+    </ul>
+
+    <h3># 원하는 html요소를 찾는 메서드들</h3>
+    <ul>
+        <li>document.getElementByID(id)</li>
+        <li>document.getElementsByTagName(tag_name)</li>
+        <li>document.getElementsByClassName(class_name)</li>
+        <li>document.querySelector(css_selector)</li> <!--많은 것들중 제일 앞에것만 가져오게됨-->
+        <li>document.querySelectorAll(css_selector)</li>
+    </ul>
+
+    <h3># 찾은 HTML요소를 변경하는 방법</h3>
+    <ul>
+        <li>element.innerHTML : 요소의 태그 사이 내용</li>
+        <li>element.attribute : 요소의 속성에 접근</li>
+        <li>element.setAttribute(name, value) : 요소의 속성에 접근하고 수정</li>
+        <li>element.style.property : 요소의 스타일 속성에 접근</li>
+    </ul>
+
+    <p id="1" class="">babo</p>
+    <p id="2" class="warning">babo</p>
+    <p id="3" class="warning">babo</p>
+    <p id="4" class="">babo</p>
+    <p id="5" class="">babo</p>
+    <p id="6" class="">babo</p>
+    <div id="" class=""></div>
+    <div id="" class="warning"></div>
+    <div id="" class=""></div>
+
+    <button id="warning_btn">경고!</button>
+
+    <hr>
+
+    <img src="../assets/image/pu.jpg" width="300" id="imgs"><br>
+    <button id="prev_img">Prev</button>
+    <button id="next_img">Next</button>
+
+    <script>
+        //document: 웹 브라우저가 HTML 문서를 해석하여 생성해 놓을 HTML문서객체 인스턴스(현재전체웹페이지를 해석한 인스턴스)
+        const ele1 = document.getElementById('1');
+        const warningBtn = document.getElementById('warning_btn');
+        const imgpic = document.getElementById("imgs");
+        
+
+        const img_path_list = [
+            '../assets/image/pu.jpg',
+            '../assets/image/푸바오1.jpeg',
+            '../assets/image/푸바오3.jpg'
+        ];
+
+        const prevImg = document.getElementById("prev_img");
+        const nextImg = document.getElementById("next_img");
+        let num =0;
+
+        prevImg.addEventListener('click', (e) =>{
+            console.log(img_path_list[0]);
+            console.log(img_path_list[1]);
+            console.log(img_path_list[2]);
+            num -= 1;
+            if(num == -1){
+                num = 2;
+            }
+            console.log(num);
+            console.log(img_path_list[num]);
+            imgpic.src = img_path_list[num];
+        });
+        nextImg.addEventListener('click', (e) =>{
+            console.log(img_path_list[0]);
+            console.log(img_path_list[1]);
+            console.log(img_path_list[2]);
+            console.log(imgpic.getAttribute('src'));
+            num += 1;
+            if(num == 3){
+                num = 0;
+            }
+            imgpic.src = img_path_list[num];
+        });
+
+        
+        let count = 0;
+
+        warningBtn.addEventListener('click',(e) =>{
+            
+            if(count == 0){
+                count = 1;
+                makeWarning();
+            }else{
+                count = 0;
+                makeWarning();
+            }
+
+        });
+
+        function makeWarning(){
+
+            //nodes는 Array가 아닌 Array 사촌(HTMLCollection)이다.
+            //(forEach가 구현되어 있지 않음)
+
+            //const nodes = document.getElementsByClassName('warning');
+
+            const elements = document.getElementsByClassName('warning'); //클래스에 해당 하는것들이 element에 배열 형태로 들어가게됨
+            if(count == 1){
+
+                for(i = 0; i < elements.length; i++){
+                    console.log(elements[i]);
+                    
+                    elements[i].style.backgroundColor = 'yellow';
+                    elements[i].style.padding = '15px';
+                    elements[i].style.border = 'dashed 3px black';
+                }
+            }else{
+                for(i = 0; i < elements.length; i++){
+                    console.log(elements[i]);
+                    
+                    elements[i].style.backgroundColor = 'transparent';
+                    elements[i].style.padding = '0px';
+                    elements[i].style.border = 'transparent';
+                }
+            }
+
+            const warningOffBtn = document.getElementById('warning_off');
+            // const warningNodes = document.getElementsByTagName();
+            const warningNodes = document.querySelectorAll('.warning');
+
+            warningOffBtn.addEventListener('click', (e) => {
+                warningOff();
+            })
+
+            function warningOff(){
+
+                Array.from(nodes).forEach((node) => {
+                    node.style.backgroundColor='white';
+                    node.style.padding = '15px';
+                    node.style.border='dashed 3px black';
+                });
+            }
+        }
+
+    </script>
+</body>
+</html>

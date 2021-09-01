@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17_WebStorage.html</title>
+    <style>
+
+        #redbutton{
+            margin: 10px 10px 10px 10px;
+            width: 200px;
+            height: 100px;
+            border: black solid 3px;
+            border-radius: 20%;
+            background-color: red;
+        }
+        #bluebutton{
+            margin: auto;
+            width: 200px;
+            height: 100px;
+            border: black solid 3px;
+            border-radius: 20%;
+            background-color: blue;
+        }
+        #savecoin{
+            text-align: auto;
+            margin-top: 10px;
+            margin-left: 170px;
+            width: 100px;
+            height: 40px;
+            border: black solid 3px;
+            background-color: dimgrey;
+        }
+        #mousecatch{
+            width: 150px;
+            height: 70px;
+            background-color: midnightblue; 
+            color: gold;
+            border: gold double 5px;
+            border-radius: 20%;
+        }
+        .canvas{
+            border: black solid 5px;
+            background-color: ivory;
+        }
+    </style>
+</head>
+<body>
+    <h3># Web Storage API</h3>
+
+    <ul>
+        <li>웹 브라우저에서 제공하는 약간의 저장 공간</li>
+        <li>웹 페이지를 운용하는데 필요한 약간의 데이터를 
+            사용자의 웹 브라우저에 key:value 형태로 
+            저장해 둘 수 있다</li>
+        <li>localStorage는 웹 브라우저를 종료하더라도 데이터가 유지된다</li>
+        <li>sessionStorage는 웹 브라우저를 종료하면 데이터가 삭제된다</li>
+    </ul>
+
+    <hr>
+
+    <h3> # 로컬스토리지에 저장되는 게임</h3>
+    <ol>
+        <li>자바스크립트로 동작하는 간단한 게임을 하나 만든다</li>
+        <li>로컬 스토리지에 사용자 이름과 전적이 저장된다</li>
+        <li>다시 접속하더라도 저장된 데이터를 이용하여
+            게임이 이어서 진행되도록 만들어보세요</li>
+    </ol>
+    <div id="divs" style="border: black dashed 5px; width: 440px; height: 350px;">
+        <p style="font-size: 30px; text-align: center;">Welcome To Baccarat!</p>
+        <p id="currentCoin"  style="font-size: 15px; text-align: center;"></p>
+        <button class = "buttons" id="redbutton"> </button>
+        <button class = "buttons" id="bluebutton"> </button><br>
+        <input type="text" id="batt" style="width: 150px; margin-left: 135px;">
+        <button for="batt" class = "buttonss" id="savecoin">배팅!</button>
+    </div>
+    <hr>
+    <button id="mousecatch">쥐잡기 게임 시작!</button>
+    <canvas class="canvas" width="1500px" height="160px"></canvas>
+    <script>
+
+      
+        const user_name = localStorage.getItem("name");
+        const user_coin = localStorage.getItem("coin");
+        const user_count = localStorage.getItem("count");
+        let coins = user_coin;
+
+        let batting = document.getElementById('batt');
+
+        if(user_name == null){
+            alert("첫 방문을 환영합니다!");
+            localStorage.setItem("name",prompt("당신의 이름을 입력해주세요"));
+            coins = 1000;
+            localStorage.setItem("coin",coins);
+        }else{
+            alert(`${user_name}님 환영합니다!`);
+            localStorage.setItem("coin",coins);
+
+        }
+        
+        let currentCoin = document.getElementById('currentCoin');
+        const button = document.getElementsByClassName('buttons');
+        const redbutton = document.getElementById('redbutton');
+        const savecoin = document.getElementById('savecoin');
+        const divs = document.getElementById('divs');
+        const mousecatch = document.getElementById('mousecatch');
+
+        currentCoin.innerHTML = '현재 보유 코인 : '+  coins + '$';
+ 
+    
+        savecoin.addEventListener('click',function(e){
+            console.log(batting.value);
+            values = batting.value;
+            if(coins == 0){
+                    alert("올인 나셨습니다")
+            }else{
+
+                let ab;
+             
+                if(parseInt(values) > parseInt(coins)){
+                        console.log('coin 값 : ',coins);
+                        console.log('values 값 : ',values);
+                        alert("남은 코인량이 부족합니다. 다시 적어주세요!");
+                }else{
+                
+                
+                    let randomvalue = parseInt(Math.random()*2 + 1);
+                    
+                    if(values != null){
+    
+                        if(randomvalue == 1){
+                            alert("승리!!!");
+                            console.log(coins);
+                            coins = parseInt(coins) + parseInt(values);;
+                            currentCoin.innerHTML = '현재 보유 코인 : '+  coins + '$';
+                            localStorage.setItem("coin",parseInt(coins));
+                        }else{
+                            alert("패배ㅜㅜ");
+                            console.log(coins);
+                            coins = parseInt(coins) - parseInt(values);;
+                            currentCoin.innerHTML = '현재 보유 코인 : '+  coins + '$';
+                            localStorage.setItem("coin",parseInt(coins));
+                        }
+                    }
+                }
+            }
+        });
+
+        button[0].addEventListener('mouseover', function(e){
+           
+            e.target.style.background = "darkred";
+        });
+        button[0].addEventListener('mouseout', function(e){
+           
+           e.target.style.background = "red";
+        });
+        button[0].addEventListener('click', function(e){
+          bluebutton.style.background = "blue";
+          bluebutton.style.border = "black solid 3px";
+           e.target.style.background = "darkred";
+           e.target.style.border = "double 7px yellow";
+           
+        });
+        button[1].addEventListener('mouseover', function(e){
+           
+           e.target.style.background = "darkblue";
+        });
+        button[1].addEventListener('mouseout', function(e){
+          
+          e.target.style.background = "blue";
+        });
+        button[1].addEventListener('click', function(e){
+          redbutton.style.background = "red";
+          redbutton.style.border = "black solid 3px";
+          e.target.style.background = "darkblue";
+          e.target.style.border = "double 7px yellow";
+        });
+  
+
+        const canvas = document.querySelector('.canvas');
+        const context = canvas.getContext('2d');
+        let xPos = 10;
+        let count = 0;
+        let circle = 0;
+        const imgElem = new Image();
+        imgElem.src = "../assets/image/151863.png";
+
+        function draw() {
+            
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // xPos = xPos + 3;
+            context.drawImage(imgElem, xPos, 60, 70, 40);
+            xPos += 5;
+            
+            if(xPos == canvas.width){
+                alert(`${count} 만큼 성공하셨습니다!`);
+                circle = 1;
+                if(user_count < count){
+                    alert("최고기록갱신!");
+                    localStorage.setItem("count", count); 
+                    circle = 1;
+                    cancelAnimationFrame(timerId);
+                }
+            }
+            console.log(xPos);
+            if(circle == 0){
+                console.log('circle : ', circle);
+                timerId = requestAnimationFrame(draw);
+            }else{
+            }
+            
+        }
+
+        canvas.addEventListener('click', function (e){
+            console.log('선택 : ',e.layerX);
+            // console.log(e.layerY);
+            console.log('xpos : ',xPos);
+
+            if((e.layerX >= xPos-30 && e.layerX <= xPos+20)){
+                count++;
+                alert("성공!")
+            }
+            
+        })
+        function createImage() {
+            const url = canvas.toDataURL('image/png');
+            const imgElem = new Image();
+            imgElem.src = url;
+            resultImage.appendChild(imgElem);
+        }
+
+        mousecatch.addEventListener('click', function (e){
+            xPos = 10;
+            circle = 0;
+            draw();
+        });
+    
+
+    </script>
+
+</body>
+</html>

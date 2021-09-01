@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04_반복문.html</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap">
+    <style>
+        #gugudan{
+            /*구구단을 이쁘게 꾸미는 스타일시트를 작성해보세요*/
+            font-family: 'Zen Dots', cursive;
+            
+            text-align: auto;
+            align-content: auto;
+
+
+            display: grid;
+            background-color: ivory;
+
+            display: grid;
+            width: 600px;
+            height: 650px;
+            overflow: hidden;
+
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+            row-gap: 10px;
+            padding: 5px;
+            line-height: 1.3em;
+            font-weight: 700;
+
+            
+        }
+        div{
+            margin: auto;
+        }
+
+
+    </style>
+</head>
+<body>
+    
+    <h3># JavaScript에도 for문과 while문이 있다.</h3>
+
+    <div id="gugudan"></div>
+
+    <script>
+        //구구단을 생성하는 자바스크립트를 작성해보세요
+        const out = document.getElementById("gugudan"); 
+
+        for(var i=1; i<10; i++){
+            if(i === 1 || i === 4 || i === 7){
+                out.innerHTML += "<hr height='10px'>";
+            }
+
+            for(var j=1; j<10; j++){
+                out.innerHTML += j + " x " + i + " = " + pluszero(i*j, 2) +"<br>";
+            }
+            out.innerHTML += "<br>";
+            
+            out.innerHTML += "<hr height='10px'>";
+        }
+
+        function pluszero(num, digit){
+            var zero = '';
+            num = num.toString();
+
+            if(num.length < digit){
+                for(var i =0; i <digit-num.length; i++){
+                    zero += '0';
+                }
+            }
+            return zero + num;
+        }
+
+    </script>
+
+</body>
+</html>

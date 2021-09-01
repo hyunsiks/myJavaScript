@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12_Node.html</title>
+</head>
+<body>
+    
+    <h3># Node</h3>
+    <ul>
+        <li>documnet에 있는 모든 것은 Node다</li>
+        <li>요소를 더욱 세분화 하면 element node 와 text node로 나눌 수 있다</li>
+        <li>즉, &lt;li&gt;는 element node, 안에 글자들은 text node</li>
+        <li>주석들은 comment node이다</li>
+    </ul>
+
+    <hr>
+
+    <div id="content">
+        <p>This is paragraph 1.</p>
+        <p>This is paragraph 2.</p>
+    </div>
+
+    <button onclick="doPush();">Push!</button>
+    <button onclick="doPop();">Pop!</button>
+
+    <script>
+        const content = document.getElementById("content");
+        const first_para = document.querySelector("#content > p:first-child"); //맨앞에다가 붙이기위함
+        // const second_para = document.querySelector("#content > p:nth-child(2)");
+
+        function doPush(){
+            //요소를 객체지향적으로 추가
+            const new_para = document.createElement("p");
+            const text_node = document.createTextNode("This is new paragraph!");
+            
+            new_para.setAttribute('id', 'abc'); //만들어진 p태그에 id를 abc라고 만든다
+            new_para.setAttribute('class', 'cll'); //만들어진 p태그에 class를 cll로 만든다
+
+            new_para.appendChild(text_node); //p안에다가 text 붙이는 것
+            content.appendChild(new_para) //div 안 맨뒤에 p를 추가
+
+            // content.insertBefore(new_para, first_para); //div안의 기준(first_para)앞에 p를 넣기위함
+        }
+
+        function doPop(){
+            const element_to_delete = document.querySelector('#content > :last-child');
+
+            element_to_delete.remove();
+        }
+    </script>
+
+</body>
+</html>
